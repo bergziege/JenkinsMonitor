@@ -5,7 +5,7 @@ using FirstFloor.ModernUI.Presentation;
 
 using ReactiveUI;
 
-namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewModels {
+namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.DesignViewModels {
     public class LoginDesignViewModel:ReactiveObject, ILoginViewModel {
         private RelayCommand _loginCommand;
         private ObservableCollection<IJobViewModel> _jobs;

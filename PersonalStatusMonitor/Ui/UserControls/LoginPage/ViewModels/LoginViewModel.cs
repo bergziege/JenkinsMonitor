@@ -17,8 +17,9 @@ using ReactiveUI;
 
 namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewModels {
     public class LoginViewModel : ReactiveObject, ILoginViewModel {
+        private readonly HudsonService _hudsonService;
         private readonly ObservableCollection<IJobViewModel> _jobs = new ObservableCollection<IJobViewModel>();
-        private readonly StripeService _stripe;
+        private readonly StripeConnector _stripeConnector;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private Color _bottomColor;
 
@@ -31,9 +32,11 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
         private Color _topColor;
         private string _username = Environment.UserName;
 
-        public LoginViewModel() {
-            _stripe = new StripeService("COM3");
-            _stripe.PropertyChanged += StripePropertyChanged;
+        public LoginViewModel(StripeConnector stripeConnector, HudsonService hudsonService) {
+            _stripeConnector = stripeConnector;
+            _hudsonService = hudsonService;
+            _stripeConnector.Connect("Com3");
+            _stripeConnector.PropertyChanged += StripePropertyChanged;
             Server = "";
         }
 
@@ -41,7 +44,7 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
             get { return _bottomColor; }
             set {
                 this.RaiseAndSetIfChanged(ref _bottomColor, value);
-                _stripe.SendColor(StripeQuadrant.Bottom, value);
+                _stripeConnector.SendColor(StripeQuadrant.Bottom, value);
             }
         }
         public ObservableCollection<IJobViewModel> Jobs {
@@ -52,7 +55,7 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
             get { return _leftColor; }
             set {
                 this.RaiseAndSetIfChanged(ref _leftColor, value);
-                _stripe.SendColor(StripeQuadrant.Left, value);
+                _stripeConnector.SendColor(StripeQuadrant.Left, value);
             }
         }
         /// <summary>
@@ -75,7 +78,7 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
             get { return _rightColor; }
             set {
                 this.RaiseAndSetIfChanged(ref _rightColor, value);
-                _stripe.SendColor(StripeQuadrant.Right, value);
+                _stripeConnector.SendColor(StripeQuadrant.Right, value);
             }
         }
         public string RotationOffset {
@@ -91,7 +94,7 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
             get { return _topColor; }
             set {
                 this.RaiseAndSetIfChanged(ref _topColor, value);
-                _stripe.SendColor(StripeQuadrant.Top, value);
+                _stripeConnector.SendColor(StripeQuadrant.Top, value);
             }
         }
 
@@ -101,7 +104,7 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
         }
 
         private void GetJobs() {
-            HudsonService hudson = new HudsonService();
+            HudsonService hudson = _hudsonService;
 
             IList<Job> jobs = hudson.GetAllJobs(Server, Username, Password);
 
@@ -174,7 +177,7 @@ namespace De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewMo
         }
 
         private void StripePropertyChanged(object sender, PropertyChangedEventArgs e) {
-            RotationOffset = _stripe.LastReceived.ToString();
+            RotationOffset = _stripeConnector.LastReceived.ToString();
         }
 
         private void TimerTick(object sender, EventArgs e) {

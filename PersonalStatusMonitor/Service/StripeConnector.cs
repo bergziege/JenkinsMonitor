@@ -8,22 +8,19 @@ using De.BerndNet2000.PersonalStatusMonitor.Domain;
 using ReactiveUI;
 
 namespace De.BerndNet2000.PersonalStatusMonitor.Service {
-    public class StripeService : ReactiveObject {
-        private readonly SerialPort _com;
+    public class StripeConnector : ReactiveObject {
+        private SerialPort _com;
         private int _lastReceived;
 
-        /// <summary>
-        ///     Erstellt eine neue Druckerachse am angegebenen COM Port.
-        /// </summary>
-        public StripeService(string comPort) {
+        public int LastReceived {
+            get { return _lastReceived; }
+        }
+
+        public void Connect(string comPort) {
             _com = new SerialPort(comPort, 9600, Parity.None, 8, StopBits.One);
             _com.Encoding = new UTF8Encoding();
             _com.DataReceived += ComDataReceived;
             _com.Open();
-        }
-
-        public int LastReceived {
-            get { return _lastReceived; }
         }
 
         public void SendColor(StripeQuadrant quadrant, Color color) {

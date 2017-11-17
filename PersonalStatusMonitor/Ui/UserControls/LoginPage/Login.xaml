@@ -6,10 +6,11 @@
              xmlns:viewModels="clr-namespace:De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.ViewModels"
              xmlns:converter="clr-namespace:De.BerndNet2000.PersonalStatusMonitor.Ui.Converter"
              xmlns:loginPage="clr-namespace:De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage"
+             xmlns:designViewModels="clr-namespace:De.BerndNet2000.PersonalStatusMonitor.Ui.UserControls.LoginPage.DesignViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <d:DesignProperties.DataContext>
-        <viewModels:LoginDesignViewModel />
+        <designViewModels:LoginDesignViewModel />
     </d:DesignProperties.DataContext>
     <UserControl.Resources>
         <converter:JobStatusToBrushConverter x:Key="statusToBrush" />
