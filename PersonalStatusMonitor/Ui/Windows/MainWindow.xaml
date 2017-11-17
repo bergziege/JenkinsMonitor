@@ -1,0 +1,21 @@
+﻿<mui:ModernWindow Height="350"
+        Title="MainWindow"
+        Width="525"
+        mc:Ignorable="d"
+        x:Class="De.BerndNet2000.PersonalStatusMonitor.Ui.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI">
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="Hudson 'Ampel'">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Login" Source="/Ui\UserControls\LoginPage\Login.xaml"/>
+                <mui:Link DisplayName="Projekte" />
+                <mui:Link DisplayName="HW Status" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+</mui:ModernWindow>
